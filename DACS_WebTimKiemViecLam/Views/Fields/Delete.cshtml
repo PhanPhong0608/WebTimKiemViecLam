@@ -1,0 +1,24 @@
+﻿@model DACS_WebTimKiemViecLam.Models.Field
+
+@{
+    ViewData["Title"] = "Xóa lĩnh vực";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Bạn có chắc chắn muốn xóa lĩnh vực này?</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Tên lĩnh vực</dt>
+        <dd class="col-sm-9">@Model.FieldName</dd>
+
+        <dt class="col-sm-3">Mô tả</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="FieldID" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

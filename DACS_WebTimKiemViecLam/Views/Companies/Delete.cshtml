@@ -1,0 +1,30 @@
+﻿@model DACS_WebTimKiemViecLam.Models.Company
+
+@{
+    ViewData["Title"] = "Xóa công ty";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <h4>Bạn có chắc chắn muốn xóa công ty này?</h4>
+    <dl class="row">
+        <dt class="col-sm-3">Tên công ty</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Người liên hệ</dt>
+        <dd class="col-sm-9">@Model.ContactPerson</dd>
+
+        <dt class="col-sm-3">Lĩnh vực</dt>
+        <dd class="col-sm-9">@Model.Field?.FieldName</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="CompanyID" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DACS_WebTimKiemViecLam.Models.Company>
+
+@{
+    ViewData["Title"] = "Danh sách công ty";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm công ty</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên công ty</th>
+            <th>Người liên hệ</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Website</th>
+            <th>Lĩnh vực</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var company in Model)
+        {
+            <tr>
+                <td>@company.Name</td>
+                <td>@company.ContactPerson</td>
+                <td>@company.Email</td>
+                <td>@company.Phone</td>
+                <td>@company.Address</td>
+                <td>@company.Website</td>
+                <td>@company.Field?.FieldName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@company.CompanyID" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@company.CompanyID" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

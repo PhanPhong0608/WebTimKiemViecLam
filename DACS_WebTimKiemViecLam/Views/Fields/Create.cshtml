@@ -1,0 +1,24 @@
+﻿@model DACS_WebTimKiemViecLam.Models.Field
+
+@{
+    ViewData["Title"] = "Thêm lĩnh vực";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label asp-for="FieldName"></label>
+        <input asp-for="FieldName" class="form-control" />
+        <span asp-validation-for="FieldName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

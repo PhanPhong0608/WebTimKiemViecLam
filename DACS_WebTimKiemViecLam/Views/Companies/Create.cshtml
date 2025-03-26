@@ -1,0 +1,46 @@
+﻿@model DACS_WebTimKiemViecLam.Models.Company
+
+@{
+    ViewData["Title"] = "Thêm công ty";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactPerson"></label>
+        <input asp-for="ContactPerson" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Website"></label>
+        <input asp-for="Website" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="FieldID">Lĩnh vực</label>
+        <select asp-for="FieldID" class="form-control" asp-items="ViewBag.FieldList">
+            <option value="">-- Chọn lĩnh vực --</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
