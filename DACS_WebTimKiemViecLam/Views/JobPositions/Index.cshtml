@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DACS_WebTimKiemViecLam.Models.JobPosition>
+
+@{
+    ViewData["Title"] = "Danh sách việc làm";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">+ Đăng việc làm</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Công ty</th>
+            <th>Lĩnh vực</th>
+            <th>Địa chỉ</th>
+            <th>Lương</th>
+            <th>Ngày đăng tin tuyển dụng</th>
+            <th>Ngày kết thúc tuyển dụng</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model)
+        {
+            <tr>
+                <td>@job.Title</td>
+                <td>@job.Company?.Name</td>
+                <td>@job.Field?.FieldName</td>
+                <td>@job.Address</td>
+                <td>@job.Salary?.ToString("N0")</td>
+                <td>@job.PostedDate.ToShortDateString()</td>
+                <td>@job.ExpiryDate?.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@job.JobID" class="btn btn-sm btn-warning">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@job.JobID" class="btn btn-sm btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

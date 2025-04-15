@@ -1,0 +1,42 @@
+﻿@model DACS_WebTimKiemViecLam.Models.JobApplication
+
+@{
+    ViewData["Title"] = "Nộp đơn ứng tuyển";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" enctype="multipart/form-data">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label asp-for="UserID">Người ứng tuyển</label>
+        <select asp-for="UserID" class="form-control" asp-items="ViewBag.UserList">
+            <option value="">-- Chọn người ứng tuyển --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="JobID">Vị trí tuyển dụng</label>
+        <select asp-for="JobID" class="form-control" asp-items="ViewBag.JobList">
+            <option value="">-- Chọn vị trí --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>File CV</label>
+        <input type="file" name="CVFile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Nộp đơn</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

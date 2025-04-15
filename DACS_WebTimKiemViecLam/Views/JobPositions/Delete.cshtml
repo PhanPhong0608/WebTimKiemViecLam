@@ -1,0 +1,28 @@
+﻿@model DACS_WebTimKiemViecLam.Models.JobPosition
+
+@{
+    ViewData["Title"] = "Xóa việc làm";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Bạn có chắc chắn muốn xóa công việc này?</h4>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Tiêu đề</dt>
+        <dd class="col-sm-9">@Model.Title</dd>
+
+        <dt class="col-sm-3">Công ty</dt>
+        <dd class="col-sm-9">@Model.Company?.Name</dd>
+
+        <dt class="col-sm-3">Lĩnh vực</dt>
+        <dd class="col-sm-9">@Model.Field?.FieldName</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="JobID" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

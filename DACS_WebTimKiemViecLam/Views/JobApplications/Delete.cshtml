@@ -1,0 +1,24 @@
+﻿@model DACS_WebTimKiemViecLam.Models.JobApplication
+
+@{
+    ViewData["Title"] = "Xóa đơn ứng tuyển";
+}
+
+<h2>Bạn có chắc chắn muốn xóa đơn ứng tuyển này?</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Người ứng tuyển</dt>
+    <dd class="col-sm-9">@Model.User?.FullName</dd>
+
+    <dt class="col-sm-3">Vị trí</dt>
+    <dd class="col-sm-9">@Model.JobPosition?.Title</dd>
+
+    <dt class="col-sm-3">Ngày nộp</dt>
+    <dd class="col-sm-9">@Model.ApplicationDate.ToShortDateString()</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="ApplicationID" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
