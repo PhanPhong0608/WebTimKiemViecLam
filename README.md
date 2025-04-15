@@ -10,7 +10,6 @@
 ## Công nghệ sử dụng
 - ASP.NET Core
 - SQL Server
-- Bootstrap
 
 # Cách lấy code về chạy
 1. Vào repos (nơi chứa folder code) 
