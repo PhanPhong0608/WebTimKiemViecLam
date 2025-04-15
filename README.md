@@ -3,8 +3,9 @@
 Đồ án môn học: Website tìm kiếm việc làm
 
 ## Thành viên nhóm
-- Phong
-- ...
+- Trần Lê Minh Quốc
+- Trần Văn Vương
+- Phan Thanh Phong
 
 ## Công nghệ sử dụng
 - ASP.NET Core
