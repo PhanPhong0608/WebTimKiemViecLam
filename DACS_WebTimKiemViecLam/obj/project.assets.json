@@ -8431,11 +8431,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Source\\Repos\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\DACS_WebTimKiemViecLam.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\DACS_WebTimKiemViecLam\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\DACS_WebTimKiemViecLam.csproj",
       "projectName": "DACS_WebTimKiemViecLam",
-      "projectPath": "C:\\Users\\Admin\\Source\\Repos\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\DACS_WebTimKiemViecLam.csproj",
+      "projectPath": "C:\\Users\\Admin\\source\\repos\\DACS_WebTimKiemViecLam\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\DACS_WebTimKiemViecLam.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Source\\Repos\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\source\\repos\\DACS_WebTimKiemViecLam\\WebTimKiemViecLam\\DACS_WebTimKiemViecLam\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

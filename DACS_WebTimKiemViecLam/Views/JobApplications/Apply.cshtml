@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Ứng tuyển việc làm";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Apply" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="JobID" value="@ViewBag.JobID" />
+
+    <div class="form-group">
+        <label>Họ tên</label>
+        <input name="FullName" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input name="Email" class="form-control" type="email" required />
+    </div>
+
+    <div class="form-group">
+        <label>Số điện thoại</label>
+        <input name="Phone" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Tải CV (PDF)</label>
+        <input type="file" name="CVFile" class="form-control" accept=".pdf" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Nộp hồ sơ</button>
+    <a asp-controller="JobPositions" asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

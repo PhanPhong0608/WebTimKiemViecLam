@@ -1,21 +1,27 @@
 ﻿using DACS_WebTimKiemViecLam.Models;
 using DACS_WebTimKiemViecLam.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DACS_WebTimKiemViecLam.Controllers
 {
     public class JobPositionsController : Controller
     {
         private readonly IJobPositionRepository _jobPositionRepo;
+        private readonly JobDbContext _context;
 
-        public JobPositionsController(IJobPositionRepository jobPositionRepo)
+        public JobPositionsController(IJobPositionRepository jobPositionRepo, JobDbContext context)
         {
             _jobPositionRepo = jobPositionRepo;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var jobs = await _jobPositionRepo.GetAllAsync();
+            var jobs = await _context.JobPositions
+                .Include(j => j.Company)
+                .Include(j => j.Field)
+                .ToListAsync();
             return View(jobs);
         }
 

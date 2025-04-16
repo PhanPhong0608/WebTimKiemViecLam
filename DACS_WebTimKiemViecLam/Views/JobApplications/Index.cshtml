@@ -1,20 +1,15 @@
-﻿@model IEnumerable<DACS_WebTimKiemViecLam.Models.JobApplication>
+﻿@model IEnumerable<JobApplication>
 
-@{
-    ViewData["Title"] = "Danh sách đơn ứng tuyển";
-}
-
-<h2>@ViewData["Title"]</h2>
-<a asp-action="Create" class="btn btn-primary">+ Tạo đơn mới</a>
-
-<table class="table table-bordered mt-3">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Người ứng tuyển</th>
             <th>Vị trí</th>
+            <th>Công ty</th>
             <th>Ngày nộp</th>
             <th>Trạng thái</th>
-            <th></th>
+            <th>CV</th>
+            <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
@@ -23,11 +18,22 @@
             <tr>
                 <td>@app.User?.FullName</td>
                 <td>@app.JobPosition?.Title</td>
+                <td>@app.JobPosition?.Company?.Name</td>
                 <td>@app.ApplicationDate.ToShortDateString()</td>
                 <td>@app.Status</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@app.ApplicationID" class="btn btn-sm btn-warning">Sửa</a>
-                    <a asp-action="Delete" asp-route-id="@app.ApplicationID" class="btn btn-sm btn-danger">Xóa</a>
+                    @if (!string.IsNullOrEmpty(app.CVFilePath))
+                    {
+                        <a href="@app.CVFilePath" target="_blank">Tải CV</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa có CV</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@app.ApplicationID" class="btn btn-warning btn-sm">Sửa</a>
+                    <a asp-action="Delete" asp-route-id="@app.ApplicationID" class="btn btn-danger btn-sm">Xoá</a>
                 </td>
             </tr>
         }

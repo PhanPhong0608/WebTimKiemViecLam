@@ -35,6 +35,7 @@
                 <td>@job.PostedDate.ToShortDateString()</td>
                 <td>@job.ExpiryDate?.ToShortDateString()</td>
                 <td>
+                    <a asp-controller="JobApplications" asp-action="Apply" asp-route-jobId="@job.JobID" class="btn btn-success btn-sm">Ứng tuyển</a>
                     <a asp-action="Edit" asp-route-id="@job.JobID" class="btn btn-sm btn-warning">Sửa</a>
                     <a asp-action="Delete" asp-route-id="@job.JobID" class="btn btn-sm btn-danger">Xóa</a>
                 </td>
