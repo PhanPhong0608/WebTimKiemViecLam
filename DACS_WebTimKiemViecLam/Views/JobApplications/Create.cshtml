@@ -1,42 +1,63 @@
-﻿@model DACS_WebTimKiemViecLam.Models.JobApplication
+﻿@model DACS_WebTimKiemViecLam.Models.JobPosition
 
 @{
-    ViewData["Title"] = "Nộp đơn ứng tuyển";
+    ViewData["Title"] = "Đăng việc làm";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" enctype="multipart/form-data">
+<form asp-action="Create" method="post">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        <label asp-for="UserID">Người ứng tuyển</label>
-        <select asp-for="UserID" class="form-control" asp-items="ViewBag.UserList">
-            <option value="">-- Chọn người ứng tuyển --</option>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Salary"></label>
+        <input asp-for="Salary" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Requirements"></label>
+        <textarea asp-for="Requirements" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PostedDate"></label>
+        <input asp-for="PostedDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ExpiryDate"></label>
+        <input asp-for="ExpiryDate" type="date" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CompanyID">Công ty</label>
+        <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
+            <option value="">-- Chọn công ty --</option>
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="JobID">Vị trí tuyển dụng</label>
-        <select asp-for="JobID" class="form-control" asp-items="ViewBag.JobList">
-            <option value="">-- Chọn vị trí --</option>
+        <label asp-for="FieldID">Lĩnh vực</label>
+        <select asp-for="FieldID" class="form-control" asp-items="ViewBag.FieldList">
+            <option value="">-- Chọn lĩnh vực --</option>
         </select>
     </div>
 
-    <div class="form-group">
-        <label>File CV</label>
-        <input type="file" name="CVFile" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Status"></label>
-        <select asp-for="Status" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="Accepted">Accepted</option>
-            <option value="Rejected">Rejected</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Nộp đơn</button>
+    <button type="submit" class="btn btn-primary">Đăng</button>
     <a asp-action="Index" class="btn btn-secondary">Hủy</a>
 </form>

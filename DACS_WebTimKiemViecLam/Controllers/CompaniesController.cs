@@ -25,12 +25,13 @@ namespace DACS_WebTimKiemViecLam.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var fields = await _fieldRepo.GetAllAsync(); // đảm bảo IFieldRepository đã được inject
+            var fields = await _fieldRepo.GetAllAsync();
             ViewBag.FieldList = new SelectList(fields, "FieldID", "FieldName");
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Company company)
         {
             if (!ModelState.IsValid)
@@ -60,6 +61,7 @@ namespace DACS_WebTimKiemViecLam.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Company company)
         {
             if (!ModelState.IsValid) return View(company);
@@ -76,6 +78,7 @@ namespace DACS_WebTimKiemViecLam.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var company = await _companyRepo.GetByIdAsync(id);
