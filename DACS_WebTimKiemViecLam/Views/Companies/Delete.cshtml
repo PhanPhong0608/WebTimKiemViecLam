@@ -22,7 +22,7 @@
         <dd class="col-sm-9">@Model.Field?.FieldName</dd>
     </dl>
 
-    <form asp-action="DeleteConfirmed">
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="CompanyID" />
         <button type="submit" class="btn btn-danger">Xóa</button>
         <a asp-action="Index" class="btn btn-secondary">Hủy</a>

@@ -4,63 +4,44 @@
     ViewData["Title"] = "Cập nhật đơn ứng tuyển";
 }
 
-<h2 class="mb-4">@ViewData["Title"]</h2>
+<h2>@ViewData["Title"]</h2>
 
-<form asp-action="Edit" method="post" class="container">
-    @* Hidden Fields *@
-    <input type="hidden" asp-for="ApplicationID" />
-    <input type="hidden" asp-for="UserID" />
-    <input type="hidden" asp-for="JobID" />
-    <input type="hidden" asp-for="CVFilePath" />
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="ApplicationID" value="@Model.ApplicationID" />
 
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Người ứng tuyển</label>
-        <div class="col-sm-9">
-            <p class="form-control-plaintext">@Model.User?.FullName</p>
-        </div>
+    <div class="form-group">
+        <label>Người ứng tuyển</label>
+        <input type="text" class="form-control" value="@Model.User?.FullName" readonly />
     </div>
 
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Vị trí tuyển dụng</label>
-        <div class="col-sm-9">
-            <p class="form-control-plaintext">@Model.JobPosition?.Title</p>
-        </div>
+    <div class="form-group">
+        <label>Vị trí tuyển dụng</label>
+        <input type="text" class="form-control" value="@Model.JobPosition?.Title" readonly />
     </div>
 
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Đường dẫn CV</label>
-        <div class="col-sm-9">
-            @if (!string.IsNullOrEmpty(Model.CVFilePath))
-            {
-                <a class="btn btn-link" href="@Url.Content(Model.CVFilePath)" target="_blank">Xem CV</a>
-            }
-            else
-            {
-                <span class="text-muted">Chưa có CV</span>
-            }
-        </div>
+    <div class="form-group">
+        <label>Đường dẫn CV</label>
+        <input type="text" class="form-control" value="@Model.CVFilePath" readonly />
+
+        @* Hiển thị nút xem CV phía dưới *@
+        @if (!string.IsNullOrEmpty(Model.CVFilePath))
+        {
+            <div class="mt-2">
+                <a href="@Url.Content(Model.CVFilePath)" target="_blank" class="btn btn-outline-primary">Xem CV</a>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted mt-2">Không có CV</p>
+        }
     </div>
 
-    <div class="form-group row">
-        <label asp-for="Status" class="col-sm-3 col-form-label">Trạng thái</label>
-        <div class="col-sm-9">
-            <select asp-for="Status" class="form-control">
-                <option value="Pending">Pending</option>
-                <option value="Accepted">Accepted</option>
-                <option value="Rejected">Rejected</option>
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label>Trạng thái</label><br />
+        <button type="submit" name="Status" value="Pending" class="btn btn-warning">Pending</button>
+        <button type="submit" name="Status" value="Accepted" class="btn btn-success">Accepted</button>
+        <button type="submit" name="Status" value="Rejected" class="btn btn-danger">Rejected</button>
     </div>
 
-    <div class="form-group row">
-        <div class="col-sm-9 offset-sm-3">
-            <button type="submit" class="btn btn-success">Lưu</button>
-            <a asp-action="Index" class="btn btn-secondary">Hủy</a>
-        </div>
-    </div>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Quay lại</a>
 </form>
-
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}

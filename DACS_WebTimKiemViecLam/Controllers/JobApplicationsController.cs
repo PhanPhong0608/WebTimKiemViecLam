@@ -3,6 +3,7 @@ using DACS_WebTimKiemViecLam.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DACS_WebTimKiemViecLam.Controllers
 {
@@ -41,13 +42,11 @@ namespace DACS_WebTimKiemViecLam.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var app = await _context.JobApplications
-               .Include(a => a.User)
-               .Include(a => a.JobPosition)
-               .FirstOrDefaultAsync(a => a.ApplicationID == id);
+                .Include(a => a.User)
+                .Include(a => a.JobPosition)
+                .FirstOrDefaultAsync(a => a.ApplicationID == id);
 
             if (app == null) return NotFound();
-            ViewBag.UserList = new SelectList(await _context.Users.ToListAsync(), "UserID", "FullName");
-            ViewBag.JobList = new SelectList(await _context.JobPositions.ToListAsync(), "JobID", "Title");
 
             return View(app);
         }
@@ -55,35 +54,39 @@ namespace DACS_WebTimKiemViecLam.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(JobApplication app)
         {
-            if (!ModelState.IsValid)
-            {
-                app.User = await _context.Users.FindAsync(app.UserID);
-                app.JobPosition = await _context.JobPositions.FindAsync(app.JobID);
-                return View(app);
-            }
+            var existing = await _context.JobApplications
+                .Include(a => a.User)
+                .Include(a => a.JobPosition)
+                .FirstOrDefaultAsync(a => a.ApplicationID == app.ApplicationID);
+
+            if (existing == null) return NotFound();
+
+            // Chỉ cập nhật trạng thái, giữ nguyên các trường còn lại
+            existing.Status = app.Status;
 
             try
             {
-                // Update entity trực tiếp (nếu app là object đầy đủ và không thiếu trường)
-                _context.JobApplications.Update(app);
+                _context.JobApplications.Update(existing);
                 await _context.SaveChangesAsync();
 
-                // Chuyển hướng về Index nếu thành công
+                TempData["Success"] = "Cập nhật trạng thái thành công.";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 Console.WriteLine("❌ Lỗi khi cập nhật: " + ex.Message);
-                ModelState.AddModelError("", "Không thể cập nhật dữ liệu.");
-                app.User = await _context.Users.FindAsync(app.UserID);
-                app.JobPosition = await _context.JobPositions.FindAsync(app.JobID);
-                return View(app);
+                ModelState.AddModelError("", "Đã xảy ra lỗi. Vui lòng thử lại.");
+                return View(existing);
             }
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var app = await _jobAppRepo.GetByIdAsync(id);
+            var app = await _context.JobApplications
+                .Include(a => a.User)
+                .Include(a => a.JobPosition)
+                .FirstOrDefaultAsync(a => a.ApplicationID == id);
+
             if (app == null) return NotFound();
             return View(app);
         }
@@ -91,11 +94,11 @@ namespace DACS_WebTimKiemViecLam.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var app = await _jobAppRepo.GetByIdAsync(id);
+            var app = await _context.JobApplications.FindAsync(id);
             if (app != null)
             {
-                _jobAppRepo.Delete(app);
-                await _jobAppRepo.SaveAsync();
+                _context.JobApplications.Remove(app);
+                await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
@@ -108,13 +111,13 @@ namespace DACS_WebTimKiemViecLam.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Apply(int JobID, string FullName, string Email, string Phone, IFormFile CVFile)
+        public async Task<IActionResult> Apply(int JobID, string FullName, string Email, string Phone, string Address, IFormFile CVFile)
         {
             if (CVFile != null && CVFile.Length > 0)
             {
                 var fileName = Path.GetFileName(CVFile.FileName);
                 var folderPath = Path.Combine("wwwroot", "uploads", "cv");
-                Directory.CreateDirectory(folderPath); // Đảm bảo thư mục tồn tại
+                Directory.CreateDirectory(folderPath); // Tạo thư mục nếu chưa có
 
                 var filePath = Path.Combine(folderPath, fileName);
 
@@ -123,17 +126,29 @@ namespace DACS_WebTimKiemViecLam.Controllers
                     await CVFile.CopyToAsync(stream);
                 }
 
-                // Tạo mới user (nếu chưa có đăng nhập)
-                var user = new User
-                {
-                    FullName = FullName,
-                    Email = Email,
-                    Phone = Phone,
-                    Address = "Không xác định"
-                };
+                // Kiểm tra xem user đã tồn tại chưa (theo Email và Phone)
+                var existingUser = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == Email && u.Phone == Phone);
 
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
+                User user;
+
+                if (existingUser != null)
+                {
+                    user = existingUser;
+                }
+                else
+                {
+                    user = new User
+                    {
+                        FullName = FullName,
+                        Email = Email,
+                        Phone = Phone,
+                        Address = Address 
+                    };
+
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+                }
 
                 // Tạo đơn ứng tuyển
                 var app = new JobApplication
@@ -152,6 +167,18 @@ namespace DACS_WebTimKiemViecLam.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(int id, string status)
+        {
+            var app = await _context.JobApplications.FindAsync(id);
+            if (app != null)
+            {
+                app.Status = status;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

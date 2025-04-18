@@ -10,11 +10,13 @@ namespace DACS_WebTimKiemViecLam.Controllers
     {
         private readonly ICompanyRepository _companyRepo;
         private readonly IFieldRepository _fieldRepo;
+        private readonly JobDbContext _context;
 
-        public CompaniesController(ICompanyRepository companyRepo, IFieldRepository fieldRepo)
+        public CompaniesController(ICompanyRepository companyRepo, IFieldRepository fieldRepo, JobDbContext context)
         {
             _companyRepo = companyRepo;
             _fieldRepo = fieldRepo;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -70,7 +72,9 @@ namespace DACS_WebTimKiemViecLam.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var company = await _companyRepo.GetByIdAsync(id);
+            var company = await _context.Companies
+                .Include(c => c.Field)
+                .FirstOrDefaultAsync(c => c.CompanyID == id);
             if (company == null) return NotFound();
             return View(company);
         }

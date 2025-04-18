@@ -9,18 +9,18 @@ namespace DACS_WebTimKiemViecLam.Models
         public int CompanyID { get; set; }
 
         [Required, StringLength(255)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required, StringLength(100)]
-        public string ContactPerson { get; set; } //Người liên hệ tại công ty
+        public string? ContactPerson { get; set; } //Người liên hệ tại công ty
 
         [Required, EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Phone]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         public string? Website { get; set; } //trang web công ty nếu có
 

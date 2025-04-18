@@ -15,7 +15,13 @@ namespace DACS_WebTimKiemViecLam.Repositories
         }
 
         public async Task<IEnumerable<JobPosition>> GetAllAsync() => await _dbSet.ToListAsync();
-        public async Task<JobPosition> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
+        public async Task<JobPosition> GetByIdAsync(int id)
+        {
+            return await _context.JobPositions
+                .Include(j => j.Company)
+                .Include(j => j.Field)
+                .FirstOrDefaultAsync(j => j.JobID == id);
+        }
         public async Task AddAsync(JobPosition entity) => await _dbSet.AddAsync(entity);
         public void Update(JobPosition entity) => _dbSet.Update(entity);
         public void Delete(JobPosition entity) => _dbSet.Remove(entity);

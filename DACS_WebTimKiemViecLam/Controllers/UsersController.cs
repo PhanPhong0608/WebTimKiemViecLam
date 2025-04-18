@@ -1,16 +1,19 @@
 ﻿using DACS_WebTimKiemViecLam.Models;
 using DACS_WebTimKiemViecLam.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DACS_WebTimKiemViecLam.Controllers
 {
     public class UsersController : Controller
     {
         private readonly IUserRepository _userRepo;
+        private readonly JobDbContext _context;
 
-        public UsersController(IUserRepository userRepo)
+        public UsersController(IUserRepository userRepo, JobDbContext context)
         {
             _userRepo = userRepo;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()

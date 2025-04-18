@@ -4,51 +4,75 @@
     ViewData["Title"] = "Đăng việc làm";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<form asp-action="Create">
+<form asp-action="Create" method="post" class="container">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
         <label asp-for="Title"></label>
         <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Description"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Salary"></label>
-        <input asp-for="Salary" class="form-control" />
+        <input asp-for="Salary" class="form-control" type="number" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="Address"></label>
-        <input asp-for="Address" class="form-control" />
+        <label asp-for="Address">Địa điểm làm việc</label>
+        <input asp-for="Address" class="form-control" placeholder="VD: TP.HCM, Hà Nội, Đà Nẵng..." />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Requirements"></label>
         <textarea asp-for="Requirements" class="form-control"></textarea>
+        <span asp-validation-for="Requirements" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="PostedDate"></label>
         <input asp-for="PostedDate" class="form-control" type="date" />
+        <span asp-validation-for="PostedDate" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="ExpiryDate"></label>
         <input asp-for="ExpiryDate" class="form-control" type="date" />
+        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label>Công ty</label>
+        <label asp-for="CompanyID">Công ty</label>
         <select asp-for="CompanyID" class="form-control" asp-items="ViewBag.CompanyList">
             <option value="">-- Chọn công ty --</option>
         </select>
+        <span asp-validation-for="CompanyID" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label>Lĩnh vực</label>
+        <label asp-for="FieldID">Lĩnh vực</label>
         <select asp-for="FieldID" class="form-control" asp-items="ViewBag.FieldList">
             <option value="">-- Chọn lĩnh vực --</option>
         </select>
+        <span asp-validation-for="FieldID" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Đăng</button>
-    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Đăng</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
 </form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

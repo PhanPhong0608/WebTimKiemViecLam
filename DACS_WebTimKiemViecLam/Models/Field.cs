@@ -8,7 +8,7 @@ namespace DACS_WebTimKiemViecLam.Models
         public int FieldID { get; set; }
 
         [Required, StringLength(100)]
-        public string FieldName { get; set; }
+        public string? FieldName { get; set; }
 
         [StringLength(500)] // Thêm dòng này
         public string? Description { get; set; }

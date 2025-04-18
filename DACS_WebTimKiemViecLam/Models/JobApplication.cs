@@ -10,14 +10,14 @@ namespace DACS_WebTimKiemViecLam.Models
 
         [ForeignKey("JobPosition")]
         public int JobID { get; set; }
-        public virtual JobPosition JobPosition { get; set; }
+        public virtual JobPosition? JobPosition { get; set; }
 
         [ForeignKey("User")]
         public int UserID { get; set; }
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         [Required]
-        public string CVFilePath { get; set; }  // Đường dẫn đến file CV
+        public string? CVFilePath { get; set; }  // Đường dẫn đến file CV
 
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
 

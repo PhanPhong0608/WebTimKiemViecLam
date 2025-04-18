@@ -1,9 +1,14 @@
-﻿@model IEnumerable<JobApplication>
+﻿@model IEnumerable<DACS_WebTimKiemViecLam.Models.JobApplication>
+@{
+    ViewData["Title"] = "Danh sách các đơn ứng tuyển";
+}
 
+<h2>@ViewData["Title"]</h2>
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>Người ứng tuyển</th>
+            <th>Email</th>
             <th>Vị trí</th>
             <th>Công ty</th>
             <th>Ngày nộp</th>
@@ -17,23 +22,35 @@
         {
             <tr>
                 <td>@app.User?.FullName</td>
+                <td>@app.User?.Email</td>
                 <td>@app.JobPosition?.Title</td>
                 <td>@app.JobPosition?.Company?.Name</td>
-                <td>@app.ApplicationDate.ToShortDateString()</td>
+                <td>@app.ApplicationDate.ToString("MM/dd/yyyy")</td>
                 <td>@app.Status</td>
                 <td>
                     @if (!string.IsNullOrEmpty(app.CVFilePath))
                     {
                         <a href="@app.CVFilePath" target="_blank">Tải CV</a>
                     }
-                    else
-                    {
-                        <span class="text-muted">Chưa có CV</span>
-                    }
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@app.ApplicationID" class="btn btn-warning btn-sm">Sửa</a>
-                    <a asp-action="Delete" asp-route-id="@app.ApplicationID" class="btn btn-danger btn-sm">Xoá</a>
+                    <a asp-action="Delete" asp-route-id="@app.ApplicationID" class="btn btn-danger btn-sm">Xóa</a>
+
+                    @if (app.Status == "Pending")
+                    {
+                        <form asp-action="UpdateStatus" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@app.ApplicationID" />
+                            <input type="hidden" name="status" value="Accepted" />
+                            <button type="submit" class="btn btn-success btn-sm">Duyệt</button>
+                        </form>
+
+                        <form asp-action="UpdateStatus" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@app.ApplicationID" />
+                            <input type="hidden" name="status" value="Rejected" />
+                            <button type="submit" class="btn btn-secondary btn-sm">Từ chối</button>
+                        </form>
+                    }
                 </td>
             </tr>
         }
